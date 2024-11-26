@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const { engine } = require('express-handlebars');
+const { extname } = require('path');
 // import { handlebars } from 'express-handlebars';
 const app = express();
 const port = 3000;
@@ -10,8 +11,10 @@ const port = 3000;
 app.use(morgan('combined'));
 
 //Template Engine
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
+// app.engine('handlebars', engine());
+//Config đuôi .handlebars -> hbs
+app.engine('.hbs', engine({extname: '.hbs'}));
+app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
 
 app.get('/', (req, res) => {
